@@ -1,0 +1,30 @@
+{
+  "name": "hsi-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/hsi-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/hsi-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "hsi:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "hsi:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "hsi:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["hsi"]
+}

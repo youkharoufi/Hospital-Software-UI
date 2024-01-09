@@ -1,0 +1,30 @@
+{
+  "name": "HSP-UI-e2e",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "HSP-UI-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "HSP-UI-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "HSP-UI:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "HSP-UI:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "HSP-UI:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["HSP-UI"]
+}
