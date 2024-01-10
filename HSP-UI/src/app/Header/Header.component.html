@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <img src="assets/hospital-logo-bright.png" class="round-image" width="55px">
+  <span>&nbsp;&nbsp;&nbsp;Hospital Software</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon *ngIf="user.roleName === 'Doctor'">supervised_user_circle</mat-icon>
+    <mat-icon *ngIf="user.roleName === 'Admin'">verified_user</mat-icon>
+    <mat-icon *ngIf="user.roleName === 'Patient'">supervised_account</mat-icon>
+  </button>
+  <button mat-raised-button color="accent" class="registration-btns">
+    Add new Doctor
+  </button>
+  <button mat-raised-button color="warn" class="example-icon">
+    Add new Admin
+  </button>
+</mat-toolbar>

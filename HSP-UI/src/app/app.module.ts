@@ -12,9 +12,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NGRXStoreModule } from '@hsi/NGRX-Store';
 import { AngularMaterialTheModule } from '@hsi/AngularMaterialTheModule';
 import { HomeComponent } from './Home/Home.component';
+import { ListOfDoctorsComponent } from './Doctor-List/ListOfDoctors.component';
+import { HeaderComponent } from './Header/Header.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    ListOfDoctorsComponent,
+    HeaderComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

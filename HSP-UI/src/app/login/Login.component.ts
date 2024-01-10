@@ -23,6 +23,11 @@ export class LoginComponent {
 
   passwordConfirmation= '';
 
+  pic='';
+
+  selectedFile!: File;
+
+
   constructor(private userFacade : UserFacade, private router: Router){}
 
   login(){
@@ -30,13 +35,27 @@ export class LoginComponent {
 
     if(localStorage.getItem('user') !== null)
     this.router.navigateByUrl('/home');
-
-
   }
 
   registerPatient(){
     this.userFacade.registerPatient(this.registerPatientUser);
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length) {
+        this.selectedFile = input.files[0];
+    } else {
+        // Handle the case where no file was selected
+    }
+}
 
 
+  onRegister() {
+    const formData = new FormData();
+    formData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    // append other RegisterUser data to formData
+
+    // Call your API to register the user
   }
 }

@@ -71,6 +71,10 @@
     <span class="span-color" *ngIf="passwordConf !== password && passwordConf.touched">The password confirmation is required</span>
   </mat-form-field>
 
+    <mat-label>Profile Picture</mat-label>
+    <input type="file" name="pic" #picture="ngModel" [(ngModel)]="pic" (change)="onFileSelected($event)" required>
+    <span class="span-color" *ngIf="picture.errors?.['required'] && picture.touched">Your profile picture is required</span>
+
   <mat-action-row>
     <button mat-button type="submit" [disabled]="registerForm.invalid" color="warn">Sign Up</button>
   </mat-action-row>
