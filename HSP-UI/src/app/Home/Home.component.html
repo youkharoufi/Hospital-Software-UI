@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Hospital Software</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon *ngIf="user.roleName === 'Doctor'">supervised_user_circle</mat-icon>
+    <mat-icon *ngIf="user.roleName === 'Admin'">verified_user</mat-icon>
+    <mat-icon *ngIf="user.roleName === 'Patient'">supervised_account</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>

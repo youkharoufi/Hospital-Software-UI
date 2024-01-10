@@ -11,9 +11,10 @@ import { StoreModule } from '@ngrx/store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NGRXStoreModule } from '@hsi/NGRX-Store';
 import { AngularMaterialTheModule } from '@hsi/AngularMaterialTheModule';
+import { HomeComponent } from './Home/Home.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
