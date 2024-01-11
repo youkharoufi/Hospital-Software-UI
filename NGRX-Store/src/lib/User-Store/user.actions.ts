@@ -22,6 +22,10 @@ export enum UserActionsTypes {
   REGISTER_PATIENT_USER = '[User] Register Patient User',
   REGISTER_PATIENT_USER_SUCCESS = '[User/API] Register Patient User Success',
   REGISTER_PATIENT_USER_ERROR = '[User/API] Register Patient User Failure',
+
+  GET_ALL_DOCTORS = '[User] Get All Doctors',
+  GET_ALL_DOCTORS_SUCCESS = '[User] Get All Doctors Success',
+  GET_ALL_DOCTORS_FAILURE = '[User] Get All Doctors Failure',
 }
 
 export const loginUserAction = createAction(
@@ -81,6 +85,20 @@ export const registerPatientUserSuccess = createAction(
 
 export const registerPatientUserFailure = createAction(
   UserActionsTypes.REGISTER_ADMIN_USER_ERROR,
+  props<{ error: Error }>()
+);
+
+export const getAllDoctors = createAction(
+  UserActionsTypes.GET_ALL_DOCTORS
+);
+
+export const getAllDoctorsSuccess = createAction(
+  UserActionsTypes.GET_ALL_DOCTORS_SUCCESS,
+  props<{ allDocs: ApplicationUser[] }>()
+);
+
+export const getAllDoctorsFailure = createAction(
+  UserActionsTypes.GET_ALL_DOCTORS_FAILURE,
   props<{ error: Error }>()
 );
 

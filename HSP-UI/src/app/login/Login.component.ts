@@ -100,9 +100,9 @@ export class LoginComponent implements OnDestroy{
       next:(st?:string)=>{
         if(st === 'success'){
           this.router.navigateByUrl('/home');
-
         }else{
           console.log("Login failed");
+          this.resetRegisterForm();
         }
       }
     })
@@ -121,9 +121,15 @@ export class LoginComponent implements OnDestroy{
 
   registerPatient() {
 
+
     if(this.registerStatusSubscription){
       this.registerStatusSubscription.unsubscribe();
     }
+
+    const loginUserCustom : LoginUser = {
+      userName:this.registerPatientUser.firstname,
+      password:this.registerPatientUser.password
+    };
 
     const formData = new FormData();
     formData.append('imageFile', this.selectedFile!, this.selectedFile!.name);
@@ -137,10 +143,6 @@ export class LoginComponent implements OnDestroy{
     this.registerStatusSubscription = this.userFacade.registrationStatus$.subscribe({
       next:(regStatus?:string)=>{
         if(regStatus === 'success'){
-          const loginUserCustom : LoginUser = {
-            userName:this.registerPatientUser.firstname,
-            password:this.registerPatientUser.password
-          }
           this.registerLogin(loginUserCustom);
         }else{
           console.log("Login Failure");
@@ -148,9 +150,6 @@ export class LoginComponent implements OnDestroy{
         }
       }
     })
-    // append other RegisterUser data to formData
-
-    // Call your API to register the user
   }
 
   ngOnDestroy() {

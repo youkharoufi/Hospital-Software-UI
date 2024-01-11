@@ -96,6 +96,22 @@ export const userReducer = createReducer(
     registrationStatus:'failure',
   })),
 
+  on(UserActions.registerPatientUserAction, (state, { registerPatientUser }) => ({
+    ...state,
+    loaded: false,
+    error: undefined,
+    registrationStatus:'pending',
+    registerPatientUser,
+  })),
+  on(UserActions.registerPatientUserSuccess, (state, { registeredPatientUser }) =>
+    ({ ...state, loaded: true, registrationStatus:'success', registeredPatientUser })
+  ),
+  on(UserActions.registerPatientUserFailure, (state, { error }) => ({
+    ...state,
+    error,
+    registrationStatus:'failure',
+  })),
+
 
 );
 
