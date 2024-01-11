@@ -11,6 +11,8 @@ export interface State extends EntityState<ApplicationUser> {
   loaded: boolean;
   error?: Error;
   loggedUser?:ApplicationUser;
+  status?:string;
+  registrationStatus?:string;
 }
 
 export interface UserPartialState {
@@ -23,7 +25,9 @@ export const userAdapter: EntityAdapter<ApplicationUser> =
 export const initialState: State = userAdapter.getInitialState({
   // set initial required properties
   loaded: false,
-  loggedUser: undefined
+  loggedUser: undefined,
+  status:'pending',
+  registrationStatus:'pending'
 });
 
 
@@ -31,17 +35,19 @@ export const userReducer = createReducer(
   initialState,
 
 
-  on(UserActions.loginUserAction, (state, { loginUser }) => ({
+  on(UserActions.loginUserAction, (state ,{ loginUser}) => ({
     ...state,
     loaded: false,
     error: undefined,
+    status:'pending',
     loginUser
   })),
   on(UserActions.loginUserSuccess, (state, { loggedUser }) =>
-    ({ ...state, loaded: true, loggedUser:loggedUser })
+    ({ ...state, loaded: true, status:'success', loggedUser:loggedUser })
   ),
   on(UserActions.loginUserFailure, (state, { error }) => ({
     ...state,
+    status:'failure',
     error,
   })),
 
@@ -78,14 +84,16 @@ export const userReducer = createReducer(
     ...state,
     loaded: false,
     error: undefined,
-    registerPatientUser
+    registrationStatus:'pending',
+    registerPatientUser,
   })),
   on(UserActions.registerPatientUserSuccess, (state, { registeredPatientUser }) =>
-    ({ ...state, loaded: true, registeredPatientUser })
+    ({ ...state, loaded: true, registrationStatus:'success', registeredPatientUser })
   ),
   on(UserActions.registerPatientUserFailure, (state, { error }) => ({
     ...state,
     error,
+    registrationStatus:'failure',
   })),
 
 

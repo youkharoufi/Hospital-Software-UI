@@ -60,15 +60,15 @@
 
   <mat-form-field>
     <mat-label>Password</mat-label>
-    <input matInput type="password" name="password" #password="ngModel" [(ngModel)]="registerPatientUser.password" required>
-    <span class="span-color" *ngIf="password.errors?.['required'] && password.touched">Your password is required</span>
+    <input matInput type="password" name="regPassword" #regPassword="ngModel" [(ngModel)]="registerPatientUser.password" required>
+    <span class="span-color" *ngIf="regPassword.errors?.['required'] && regPassword.touched">Your password is required</span>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Password Confirmation</mat-label>
     <input matInput type="password" name="passwordConf" #passwordConf="ngModel" [(ngModel)]="passwordConfirmation" required>
     <span class="span-color" *ngIf="passwordConf.errors?.['required'] && passwordConf.touched">The password confirmation is required</span>
-    <span class="span-color" *ngIf="passwordConf !== password && passwordConf.touched">The password confirmation is required</span>
+    <span class="span-color" *ngIf="passwordConf.value !== this.registerPatientUser.password && passwordConf.touched">The password confirmation must match your password</span>
   </mat-form-field>
 
     <mat-label>Profile Picture</mat-label>
@@ -88,3 +88,4 @@
 </div>
 
 </div>
+

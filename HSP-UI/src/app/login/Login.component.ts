@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginUser, RegisterUser, UserFacade } from '@hsi/NGRX-Store';
+import { ApplicationUser, LoginUser, RegisterUser, UserFacade } from '@hsi/NGRX-Store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'hsi-login',
   templateUrl: './Login.component.html',
   styleUrl: './Login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
 
   loginUser : LoginUser = {
     userName:'',
@@ -18,27 +20,93 @@ export class LoginComponent {
     firstname:'',
     lastname:'',
     password:'',
-    roleName:'Patient'
+    roleName:'Patient',
+    pictureUrl:''
   }
 
-  passwordConfirmation= '';
+  passwordConfirmation!:string;
 
-  pic='';
+  pic!:string;
 
-  selectedFile!: File;
+  selectedFile?: File;
+
+  user!: ApplicationUser;
+
+  private loginStatusSubscription?: Subscription;
+  private registerStatusSubscription?: Subscription;
+
+  @ViewChild('registerForm') registerForm!: NgForm;
+  @ViewChild('loginForm') loginForm!: NgForm;
+
 
 
   constructor(private userFacade : UserFacade, private router: Router){}
 
   login(){
-    this.userFacade.login(this.loginUser);
 
-    if(localStorage.getItem('user') !== null)
-    this.router.navigateByUrl('/home');
+    if (this.loginStatusSubscription) {
+      this.loginStatusSubscription.unsubscribe();
+    }
+
+    this.userFacade.login(this.loginUser)
+
+    this.loginStatusSubscription = this.userFacade.status$.subscribe({
+      next:(st?:string)=>{
+        if(st === 'success'){
+          this.router.navigateByUrl('/home');
+
+        }else{
+          console.log("Login failed");
+          this.resetLoginForm();
+        }
+      }
+    })
+
+
   }
 
-  registerPatient(){
-    this.userFacade.registerPatient(this.registerPatientUser);
+  resetLoginForm() {
+    // Reset model data
+    this.loginUser = {
+      userName: '',
+      password: '',
+    };
+
+    // Reset form state
+    if (this.loginForm) {
+      this.loginForm.resetForm();
+    }
+  }
+
+  resetRegisterForm(){
+    this.registerPatientUser = {
+      firstname:'',
+    lastname:'',
+    password:'',
+    roleName:'Patient',
+    pictureUrl:''
+
+    }
+
+    if(this.registerForm){
+      this.registerForm.resetForm();
+    }
+  }
+
+  registerLogin(regUserPatient:LoginUser){
+    this.userFacade.login(regUserPatient)
+
+    this.userFacade.status$.subscribe({
+      next:(st?:string)=>{
+        if(st === 'success'){
+          this.router.navigateByUrl('/home');
+
+        }else{
+          console.log("Login failed");
+        }
+      }
+    })
+
   }
 
   onFileSelected(event: Event) {
@@ -51,11 +119,48 @@ export class LoginComponent {
 }
 
 
-  onRegister() {
+  registerPatient() {
+
+    if(this.registerStatusSubscription){
+      this.registerStatusSubscription.unsubscribe();
+    }
+
     const formData = new FormData();
-    formData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    formData.append('imageFile', this.selectedFile!, this.selectedFile!.name);
+    formData.append('firstname', this.registerPatientUser.firstname);
+    formData.append('lastname', this.registerPatientUser.lastname);
+    formData.append('roleName', this.registerPatientUser.roleName);
+    formData.append('password', this.registerPatientUser.password);
+
+    this.userFacade.registerPatient(formData);
+
+    this.registerStatusSubscription = this.userFacade.registrationStatus$.subscribe({
+      next:(regStatus?:string)=>{
+        if(regStatus === 'success'){
+          const loginUserCustom : LoginUser = {
+            userName:this.registerPatientUser.firstname,
+            password:this.registerPatientUser.password
+          }
+          this.registerLogin(loginUserCustom);
+        }else{
+          console.log("Login Failure");
+          this.resetRegisterForm();
+        }
+      }
+    })
     // append other RegisterUser data to formData
 
     // Call your API to register the user
+  }
+
+  ngOnDestroy() {
+
+    if (this.loginStatusSubscription) {
+      this.loginStatusSubscription.unsubscribe();
+    }
+
+    if(this.registerStatusSubscription){
+      this.registerStatusSubscription.unsubscribe();
+    }
   }
 }

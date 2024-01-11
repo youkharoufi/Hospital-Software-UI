@@ -3,5 +3,6 @@ export interface RegisterUser{
   lastname:string;
   password:string;
   badgeNumber?:number;
+  pictureUrl:string;
   roleName:string
 }

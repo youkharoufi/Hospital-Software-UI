@@ -2,6 +2,7 @@
   <img src="assets/hospital-logo-bright.png" class="round-image" width="55px">
   <span>&nbsp;&nbsp;&nbsp;Hospital Software</span>
   <span class="example-spacer"></span>
+  <ng-container *ngIf="userLoaded">
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
     <mat-icon *ngIf="user.roleName === 'Doctor'">supervised_user_circle</mat-icon>
     <mat-icon *ngIf="user.roleName === 'Admin'">verified_user</mat-icon>
@@ -10,7 +11,13 @@
   <button mat-raised-button color="accent" class="registration-btns">
     Add new Doctor
   </button>
-  <button mat-raised-button color="warn" class="example-icon">
+  <button mat-raised-button color="warn" class="registration-btns">
     Add new Admin
   </button>
+
+  <img [src]="user.pictureUrl" style="margin-left:10px" class="round-image" width="55px">
+  <button mat-flat-button color="primary" (click)="logout()" class="registration-btns">
+    Logout
+  </button>
+</ng-container>
 </mat-toolbar>

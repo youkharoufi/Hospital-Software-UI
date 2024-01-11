@@ -12,6 +12,8 @@ export class UserFacade {
 
   error$ = this.store.pipe(select(UserSelectors.getAccountError));
   loggedUser$ = this.store.pipe(select(UserSelectors.getLoggedUser));
+  status$ = this.store.pipe(select(UserSelectors.getStatus));
+  registrationStatus$ = this.store.pipe(select(UserSelectors.getRegistrationStatus))
 
   constructor(private store: Store<fromUser.UserPartialState>) { }
 
@@ -27,7 +29,7 @@ export class UserFacade {
     this.store.dispatch(registerDoctorUserAction({ registerDoctorUser }));
   }
 
-  registerPatient(registerPatientUser: RegisterUser) {
+  registerPatient(registerPatientUser: FormData) {
     this.store.dispatch(registerPatientUserAction({ registerPatientUser }));
   }
 

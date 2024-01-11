@@ -11,6 +11,16 @@ export const getLoggedUser = createSelector(
   (state: State) => state.loggedUser
 );
 
+export const getStatus = createSelector(
+  getAccountState,
+  (state: State) => state.status
+)
+
+export const getRegistrationStatus = createSelector(
+  getAccountState,
+  (state: State) => state.registrationStatus
+)
+
 export const getAccountError = createSelector(
   getAccountState,
   (state: State) => state.error

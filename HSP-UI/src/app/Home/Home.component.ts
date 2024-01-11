@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ApplicationUser, UserFacade } from '@hsi/NGRX-Store';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'hsi-home',

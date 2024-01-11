@@ -31,7 +31,7 @@ export class UserService {
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/register-doctor", registerUser);
   }
 
-  registerPatient(registerUser: RegisterUser): Observable<ApplicationUser> {
+  registerPatient(registerUser: FormData): Observable<ApplicationUser> {
 
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/register-patient", registerUser);
   }

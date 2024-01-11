@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApplicationUser, UserFacade } from '@hsi/NGRX-Store';
 
 @Component({
@@ -8,24 +9,37 @@ import { ApplicationUser, UserFacade } from '@hsi/NGRX-Store';
 })
 export class HeaderComponent implements OnInit{
 
-  user$ = this.userFacade.loggedUser$;
   user!: ApplicationUser;
+  userLoaded = false;
+  user$ = this.userFacade.loggedUser$;
 
-  constructor(private userFacade: UserFacade){}
+  constructor(private userFacade : UserFacade, private cdr: ChangeDetectorRef,
+    private router: Router){}
 
   ngOnInit(): void{
 
-    if(localStorage.getItem('user') !== null){
-
-      this.user = JSON.parse(localStorage.getItem('user')!)
-      // this.user$.subscribe({
-      //   next:(currentUser?:ApplicationUser) => {
-      //     this.user = currentUser!;
-      //   },
-      //   error:() =>{
-      //     console.log("An error occured : No User Connected...")
-      //   }
-      // })
+    const localUser = localStorage.getItem('user');
+    if (localUser) {
+      this.user = JSON.parse(localUser);
+      this.userLoaded = true;
+      this.cdr.detectChanges();
     }
+
+    this.user$.subscribe({
+      next:(usr:ApplicationUser | undefined)=>{
+        this.user = usr!;
+        console.log(this.user);
+        this.userLoaded = true;
+        this.cdr.detectChanges();
+      }
+    })
+
+  }
+
+  logout(){
+    localStorage.setItem('user', JSON.stringify(null));
+
+    this.router.navigateByUrl('/start-menu');
+
   }
 }

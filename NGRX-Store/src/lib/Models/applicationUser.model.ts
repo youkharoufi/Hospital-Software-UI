@@ -4,6 +4,7 @@ export interface ApplicationUser{
   lastname:string;
   badgeNumber:number;
   roleName:string;
+  pictureUrl:string;
   token?:string;
 
 }

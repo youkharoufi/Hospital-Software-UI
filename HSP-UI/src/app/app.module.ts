@@ -39,5 +39,6 @@ import { HeaderComponent } from './Header/Header.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports:[LoginComponent]
 })
 export class AppModule {}

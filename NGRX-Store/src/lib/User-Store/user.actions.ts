@@ -71,7 +71,7 @@ export const registerDoctorUserFailure = createAction(
 
 export const registerPatientUserAction = createAction(
   UserActionsTypes.REGISTER_PATIENT_USER,
-  props<{ registerPatientUser: RegisterUser }>()
+  props<{ registerPatientUser: FormData }>()
 );
 
 export const registerPatientUserSuccess = createAction(

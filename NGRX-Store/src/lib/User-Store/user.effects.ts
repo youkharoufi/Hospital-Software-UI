@@ -5,6 +5,8 @@ import * as UserActions from './user.actions';
 import { UserService } from './user.service';
 import { ApplicationUser } from '../Models/applicationUser.model';
 import { BehaviorSubject, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../components/SnackBar.component';
 
 
 @Injectable()
@@ -42,14 +44,16 @@ export class UserEffects {
       )
   );
 
-//   showLoginError$ = createEffect(() =>
-//   this.actions$.pipe(
-//     ofType(AccountActions.loginAccountFailure),
-//     tap(() => {
-//       this.messageService.add({key:"loginFailure", severity:'error', summary: 'Error', detail: 'Login Failed! Invalid credentials'});
-//     })
-//   ), { dispatch: false }
-// );
+  showLoginError$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(UserActions.loginUserFailure),
+    tap(() => {
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        duration: 5000,
+      });
+    })
+  ), { dispatch: false }
+);
 
 // showLoginSuccess$ = createEffect(() =>
 // this.actions$.pipe(
@@ -99,7 +103,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(UserActions.registerPatientUserAction),
       switchMap((action) =>
-        this.backend.registerDoctor(action.registerPatientUser).pipe(
+        this.backend.registerPatient(action.registerPatientUser).pipe(
           map((registeredPatientUser: ApplicationUser) =>
             UserActions.registerPatientUserSuccess({ registeredPatientUser })
           ),
@@ -112,15 +116,16 @@ export class UserEffects {
     )
   );
 
-//   showRegisterError$ = createEffect(() =>
-//   this.actions$.pipe(
-//     ofType(AccountActions.registerAccountFailure),
-//     tap(() => {
-//       console.log("mermelak");
-//       this.messageService.add({key:"registerSuccess", severity:'success', summary: 'Success', detail: 'You have been registered successfully !'});
-//     })
-//   ), { dispatch: false }
-// );
+  showPatientRegisterError$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(UserActions.registerPatientUserFailure),
+    tap(() => {
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        duration: 5000,
+      });
+    })
+  ), { dispatch: false }
+);
 
 // showRegisterSuccess$ = createEffect(() =>
 //   this.actions$.pipe(
@@ -132,6 +137,7 @@ export class UserEffects {
 // );
 
 
-  constructor(private actions$: Actions, private backend: UserService) { }
+
+  constructor(private actions$: Actions, private backend: UserService, private _snackBar: MatSnackBar) { }
 
         }
