@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Would you like to Register ? </h1>
+<div mat-dialog-content>
+<form #registerForm="ngForm" (submit)="registerPatient()">
+  <div>
+  <mat-form-field>
+    <mat-label>Firstname</mat-label>
+    <input matInput type="text" name="firstname" #firstname="ngModel" [(ngModel)]="registerPatientUser.firstname" required>
+    <span class="span-color" *ngIf="firstname.errors?.['required'] && firstname.touched">Your firstname is required</span>
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-form-field>
+    <mat-label>Lastname</mat-label>
+    <input matInput type="text" name="lastname" #lastname="ngModel" [(ngModel)]="registerPatientUser.lastname" required>
+    <span class="span-color" *ngIf="lastname.errors?.['required'] && lastname.touched">Your lastname is required</span>
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" name="regPassword" #regPassword="ngModel" [(ngModel)]="registerPatientUser.password" required>
+    <span class="span-color" *ngIf="regPassword.errors?.['required'] && regPassword.touched">Your password is required</span>
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-form-field>
+    <mat-label>Password Confirmation</mat-label>
+    <input matInput type="password" name="passwordConf" #passwordConf="ngModel" [(ngModel)]="passwordConfirmation" required>
+    <span class="span-color" *ngIf="passwordConf.errors?.['required'] && passwordConf.touched">The password confirmation is required</span>
+    <span class="span-color" *ngIf="passwordConf.value !== this.registerPatientUser.password && passwordConf.touched">The password confirmation must match your password</span>
+  </mat-form-field>
+</div>
+
+<div>
+    <mat-label>Profile Picture</mat-label>
+    <input type="file" name="pic" #picture="ngModel" [(ngModel)]="pic" (change)="onFileSelected($event)" required>
+    <span class="span-color" *ngIf="picture.errors?.['required'] && picture.touched">Your profile picture is required</span>
+</div>
+    <div mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="registerForm.invalid" color="primary">Register</button>
+      <button mat-button type="button" (click)="onNoClick()">Cancel</button>
+    </div>
+</form>
+</div>
+

@@ -1,81 +1,43 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ApplicationUser, LoginUser, RegisterUser, UserFacade } from '@hsi/NGRX-Store';
+import { LoginUser, RegisterUser, UserFacade } from '@hsi/NGRX-Store';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'hsi-login',
-  templateUrl: './Login.component.html',
-  styleUrl: './Login.component.scss',
+  selector: 'hsi-register-dialog',
+  templateUrl: './RegisterDialog.component.html',
+  styleUrl: './RegisterDialog.component.scss',
 })
-export class LoginComponent implements OnDestroy{
+export class RegisterDialogComponent {
 
-  loginUser : LoginUser = {
-    userName:'',
-    password:''
-  };
+  registerStatusSubscription!: Subscription;
 
-  registerPatientUser: RegisterUser = {
+  registerPatientUser : RegisterUser = {
     firstname:'',
     lastname:'',
     password:'',
     roleName:'Patient',
     pictureUrl:''
-  }
+  };
+
+  registerForm!: NgForm;
+
+  selectedFile ?: File;
 
   passwordConfirmation!:string;
 
-  pic!:string;
+  pic='';
 
-  selectedFile?: File;
+  loginStatusSubscription!: Subscription;
 
-  user!: ApplicationUser;
-
-  private loginStatusSubscription?: Subscription;
-  private registerStatusSubscription?: Subscription;
-
-  @ViewChild('registerForm') registerForm!: NgForm;
-  @ViewChild('loginForm') loginForm!: NgForm;
+  constructor(private router: Router, private userFacade : UserFacade,
+    public dialogRef: MatDialogRef<RegisterDialogComponent>){}
 
 
-
-  constructor(private userFacade : UserFacade, private router: Router){}
-
-  login(){
-
-    if (this.loginStatusSubscription) {
-      this.loginStatusSubscription.unsubscribe();
-    }
-
-    this.userFacade.login(this.loginUser)
-
-    this.loginStatusSubscription = this.userFacade.status$.subscribe({
-      next:(st?:string)=>{
-        if(st === 'success'){
-          this.router.navigateByUrl('/home');
-
-        }else{
-          console.log("Login failed");
-          this.resetLoginForm();
-        }
-      }
-    })
-
-
-  }
-
-  resetLoginForm() {
-    // Reset model data
-    this.loginUser = {
-      userName: '',
-      password: '',
-    };
-
-    // Reset form state
-    if (this.loginForm) {
-      this.loginForm.resetForm();
-    }
+  onNoClick(){
+    this.dialogRef.close();
   }
 
   resetRegisterForm(){
@@ -94,12 +56,18 @@ export class LoginComponent implements OnDestroy{
   }
 
   registerLogin(regUserPatient:LoginUser){
+
+    if (this.loginStatusSubscription) {
+      this.loginStatusSubscription.unsubscribe();
+    }
+
     this.userFacade.login(regUserPatient)
 
     this.userFacade.status$.subscribe({
       next:(st?:string)=>{
         if(st === 'success'){
-          this.router.navigateByUrl('/home');
+          this.onNoClick();
+          this.router.navigateByUrl('/');
         }else{
           console.log("Login failed");
           this.resetRegisterForm();
@@ -142,24 +110,34 @@ export class LoginComponent implements OnDestroy{
 
     this.registerStatusSubscription = this.userFacade.registrationStatus$.subscribe({
       next:(regStatus?:string)=>{
-        if(regStatus === 'success'){
-          this.registerLogin(loginUserCustom);
-        }else{
-          console.log("Login Failure");
-          this.resetRegisterForm();
-        }
+        setTimeout(()=>{
+          if(regStatus === 'success'){
+            this.registerLogin(loginUserCustom);
+
+          }else{
+            this.resetRegisterForm();
+            this.onNoClick();
+          }
+        }, 2000);
+
+      },
+      error: (err) => {
+        console.error("Error occurred", err);
       }
     })
   }
 
   ngOnDestroy() {
 
-    if (this.loginStatusSubscription) {
-      this.loginStatusSubscription.unsubscribe();
-    }
 
     if(this.registerStatusSubscription){
       this.registerStatusSubscription.unsubscribe();
     }
+
+    if (this.loginStatusSubscription) {
+      this.loginStatusSubscription.unsubscribe();
+    }
   }
+
+
 }

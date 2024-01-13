@@ -127,14 +127,39 @@ export class UserEffects {
   ), { dispatch: false }
 );
 
-// showRegisterSuccess$ = createEffect(() =>
-//   this.actions$.pipe(
-//     ofType(AccountActions.registerAccountSuccess),
-//     tap(() => {
-//       this.messageService.add({key:"registerSuccess", severity:'success', summary: 'Success', detail: 'You have been registered successfully'});
-//     })
-//   ), { dispatch: false }
-// );
+getAllDoctors$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.getAllDoctors),
+      switchMap(() =>
+        this.backend.getAllDoctors().pipe(
+          map((allDocs: ApplicationUser[]) =>
+            UserActions.getAllDoctorsSuccess({ allDocs })
+          ),
+          catchError((error) =>
+            of(UserActions.getAllDoctorsFailure({ error }))
+          )
+
+        )
+      )
+    )
+  );
+
+  getDoctorsBySpeciality$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.getDoctorsBySpeciality),
+      switchMap((action) =>
+        this.backend.getDoctorsBySpeciality(action.spe).pipe(
+          map((filteredDocs: ApplicationUser[]) =>
+            UserActions.getDoctorsBySpecialitySuccess({ filteredDocs })
+          ),
+          catchError((error) =>
+            of(UserActions.getDoctorsBySpecialityFailure({ error }))
+          )
+
+        )
+      )
+    )
+  );
 
 
 

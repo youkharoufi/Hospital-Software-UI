@@ -9,13 +9,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
 @NgModule({
   imports: [CommonModule, MatExpansionModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule,
-    MatToolbarModule, MatSnackBarModule],
+    MatToolbarModule, MatSnackBarModule, MatDialogModule],
   exports: [MatExpansionModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule,
-    MatToolbarModule, MatSnackBarModule],
+    MatToolbarModule, MatSnackBarModule, MatDialogModule],
 })
 export class AngularMaterialTheModule {}

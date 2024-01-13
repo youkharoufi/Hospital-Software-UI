@@ -36,5 +36,14 @@ export class UserService {
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/register-patient", registerUser);
   }
 
+  getAllDoctors(): Observable<ApplicationUser[]> {
+
+    return this.http.get<ApplicationUser[]>(this.baseUrl + "userManagement/all-doctors");
+  }
+
+  getDoctorsBySpeciality(spe: string): Observable<ApplicationUser[]>{
+    return this.http.get<ApplicationUser[]>(`${this.baseUrl}usermanagement/doctors-by-specialty/${spe}`);
+  }
+
 
 }

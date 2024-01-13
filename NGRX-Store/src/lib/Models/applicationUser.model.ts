@@ -6,5 +6,5 @@ export interface ApplicationUser{
   roleName:string;
   pictureUrl:string;
   token?:string;
-
+  speciality?:string;
 }

@@ -21,6 +21,16 @@ export const getRegistrationStatus = createSelector(
   (state: State) => state.registrationStatus
 )
 
+export const getAllDoctors = createSelector(
+  getAccountState,
+  (state: State) => state.allDocs
+);
+
+export const getFilteredDoctors = createSelector(
+  getAccountState,
+  (state: State) => state.filteredDocs
+);
+
 export const getAccountError = createSelector(
   getAccountState,
   (state: State) => state.error

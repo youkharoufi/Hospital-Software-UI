@@ -5,7 +5,7 @@ import * as fromUser from './user.reducers';
 import * as UserSelectors from './user.selectors';
 import { LoginUser } from '../Models/loginUser.model';
 import { RegisterUser } from '../Models/registerUser.model';
-import { loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
+import { getAllDoctors, getDoctorsBySpeciality, loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
@@ -13,7 +13,9 @@ export class UserFacade {
   error$ = this.store.pipe(select(UserSelectors.getAccountError));
   loggedUser$ = this.store.pipe(select(UserSelectors.getLoggedUser));
   status$ = this.store.pipe(select(UserSelectors.getStatus));
-  registrationStatus$ = this.store.pipe(select(UserSelectors.getRegistrationStatus))
+  registrationStatus$ = this.store.pipe(select(UserSelectors.getRegistrationStatus));
+  allDocs$ = this.store.pipe(select(UserSelectors.getAllDoctors));
+  filteredDocs$ = this.store.pipe(select(UserSelectors.getFilteredDoctors));
 
   constructor(private store: Store<fromUser.UserPartialState>) { }
 
@@ -31,6 +33,14 @@ export class UserFacade {
 
   registerPatient(registerPatientUser: FormData) {
     this.store.dispatch(registerPatientUserAction({ registerPatientUser }));
+  }
+
+  getAllDoctors(){
+    this.store.dispatch(getAllDoctors())
+  }
+
+  getDoctorsBySpeciality(spe:string){
+    this.store.dispatch(getDoctorsBySpeciality({ spe }))
   }
 
 }

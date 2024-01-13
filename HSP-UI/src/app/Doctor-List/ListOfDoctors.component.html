@@ -1,21 +1,92 @@
-<hsi-header></hsi-header>
+<section class="page-title bg-1">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">All Doctors</span>
+          <h1 class="text-capitalize mb-5 text-lg">Specalized doctors</h1>
 
-<!-- <mat-card *ngFor="" class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- portfolio -->
+<section class="section doctors">
+  <div class="container">
+  	  <div class="row justify-content-center">
+             <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h2>Doctors</h2>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>We provide a wide range of creative services adipisicing elit. Autem maxime rem modi eaque, voluptate. Beatae officiis neque </p>
+                </div>
+            </div>
+        </div>
+
+      <div class="col-12 text-center  mb-5">
+	        <div class="btn-group btn-group-toggle " data-toggle="buttons">
+	          <label (click)="noFiltering()" class="btn active ">
+	            <input type="radio" name="shuffle-filter" value="all" checked="checked" />All Department
+	          </label>
+	          <label (click)="filterBySpeciality('Cardiology')" class="btn ">
+	            <input type="radio" name="shuffle-filter" value="cat1" />Cardiology
+	          </label>
+	          <label (click)="filterBySpeciality('Dental')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat2" />Dental
+	          </label>
+            <label (click)="filterBySpeciality('Gynecology')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat6" />Gynecology
+	          </label>
+	          <label (click)="filterBySpeciality('Neurology')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat3" />Neurology
+	          </label>
+	           <label (click)="filterBySpeciality('Pediatric')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat5" />Pediatric
+	          </label>
+	          <label (click)="filterBySpeciality('Traumatology')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat6" />Traumatology
+	          </label>
+            <label (click)="filterBySpeciality('General Medecine')" class="btn">
+	            <input type="radio" name="shuffle-filter" value="cat6" />General Madecine
+	          </label>
+	        </div>
+      </div>
+
+    <div class="row shuffle-wrapper portfolio-gallery">
+
+
+      	<div *ngFor="let doc of (doctors | async)" class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat1&quot;,&quot;cat2&quot;]">
+          <a routerLink="/doctor-schedule/{{doc.id}}">
+	      	<div class="position-relative doctor-inner-box">
+		        <div class="doctor-profile">
+	               <div class="doctor-img">
+	               		<img [src]="doc.pictureUrl" alt="doctor-image" class="img-fluid w-100">
+	               </div>
+	            </div>
+                <div class="content mt-3">
+                	<h4 class="mb-0"><a href="doctor-single.html">{{doc.firstname}} {{doc.lastname}}</a></h4>
+                	<p>{{doc.speciality}}</p>
+                </div>
+	      	</div>
+        </a>
+      	</div>
+
+      <!-- /portfolio -->
+<section class="section cta-page">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-7">
+				<div class="cta-content">
+					<div class="divider mb-4"></div>
+					<h2 class="mb-5 text-lg">We are pleased to offer you the <span class="title-color">chance to have the healthy</span></h2>
+					<a href="appoinment.html" class="btn btn-main-2 btn-round-full">Get appoinment<i class="icofont-simple-right  ml-2"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+

@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Would you like to LOGIN ? </h1>
+<div mat-dialog-content>
+  <form #loginForm="ngForm" (submit)="login()">
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" name="username" #username="ngModel" [(ngModel)]="loginUser.userName" required>
+      <span class="span-color" *ngIf="username.errors?.['required'] && username.touched">* Username is required</span>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput name="loginPassword" [(ngModel)]="loginUser.password" #loginPassword="ngModel" type="password" required>
+      <span class="span-color" *ngIf="loginPassword.errors?.['required'] && loginPassword.touched">Password is required</span>
+    </mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button type="submit" [disabled]="loginForm.invalid" color="primary">Login</button>
+  <button mat-button type="button" color="warn" (click)="onNoClick()">Cancel</button>
+</div>
+</form>
+</div>
