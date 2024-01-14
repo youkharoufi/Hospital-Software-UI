@@ -1,6 +1,19 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Slot, SlotService } from '@hsi/NGRX-Store';
+import { SlotService } from '@hsi/NGRX-Store';
+import { CalendarEvent } from 'angular-calendar';
+
+const colors = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  green: {
+    primary: '#28a745',
+    secondary: '#DFF6DD'
+  }
+  // ... more colors if needed
+};
 
 
 @Component({
@@ -9,10 +22,8 @@ import { Slot, SlotService } from '@hsi/NGRX-Store';
   styleUrl: './Schedule.component.scss',
 })
 export class ScheduleComponent {
-  weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  hours = Array.from({ length: 24 }, (_, i) => i);
-  slots: Slot[] = [];
-  slotsByDayAndHour: { [key: string]: Slot[] } = {};
+  viewDate: Date = new Date();
+  events: CalendarEvent[]=[];
 
   docId!:string;
   patientId!:string;
@@ -22,11 +33,7 @@ export class ScheduleComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.docId = params['id']; // The name 'id' should match the route parameter name
-      this.slotService.allSlotsByDoctorId(this.docId).subscribe(data => {
-        this.slots = data;
-        this.processSlots();
-      });
+      this.docId = params['id'];
     });
 
     if(localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
@@ -34,64 +41,44 @@ export class ScheduleComponent {
       this.patientId = user.id
     }
 
+    const now = new Date();
+    console.log(now);
+
+    this.slotService.allSlotsByDoctorId(this.docId).subscribe(slots => {
+
+      this.events = slots.map(slot => {
+
+        return {
+          start: new Date(slot.slotTime),
+          title: slot.booked ? 'Booked' : 'Available',
+          color: slot.booked || now > new Date(slot.slotTime) ? colors.red : colors.green,
+          meta: {
+            slotId: slot.id
+          }
+        };
 
 
+
+      })
+
+    console.log(this.events);
+
+  })
   }
 
-  processSlots() {
-    this.slots.forEach(slot => {
-      const slotDate = new Date(slot.slotTime);
-      const day = this.weekDays[slotDate.getDay()];
-      const hour = slotDate.getHours();
-      const key = `${day}-${hour}`;
 
-      if (!this.slotsByDayAndHour[key]) {
-        this.slotsByDayAndHour[key] = [];
-      }
 
-      this.slotsByDayAndHour[key].push(slot);
-    });
-  }
+  onSlotClick(event: { event: CalendarEvent; sourceEvent: MouseEvent | KeyboardEvent }): void {
+    // Check if the event is a slot (not an event)
+    if (event.event && event.event.meta && event.event.meta.slotId) {
+      const slotId = event.event.meta.slotId;
+      // Now you have the slotId, you can use it as needed.
+      console.log('Clicked on slot with ID:', slotId);
 
-  isSlotBooked(day: string, hour: number): boolean {
-    const key = `${day}-${hour}`;
-    const slotsForThisHour = this.slotsByDayAndHour[key];
-
-    if (slotsForThisHour) {
-      // Check if any slot in this hour is booked
-      return slotsForThisHour.some(slot => slot.booked);
+      this.router.navigateByUrl(`/appointment/${event.event.meta.slotId}/${this.docId}/${this.patientId}`)
     }
-
-    return false; // Return false if there are no slots in this hour
   }
 
-  getBookedSlot(day: string, hour: number): Slot | null {
-    const key = `${day}-${hour}`;
-    const slotsForThisHour = this.slotsByDayAndHour[key];
-
-    if (slotsForThisHour) {
-      const bookedSlot = slotsForThisHour.find(slot => slot.booked);
-      return bookedSlot || null;
-    }
-
-    return null;
-  }
-
-  getUnBookedSlot(day: string, hour: number): Slot | null {
-    const key = `${day}-${hour}`;
-    const slotsForThisHour = this.slotsByDayAndHour[key];
-
-    if (slotsForThisHour) {
-      const bookedSlot = slotsForThisHour.find(slot => !slot.booked);
-      return bookedSlot || null;
-    }
-
-    return null;
-  }
-
-  bookAppointment(slotId:string, doctorId:string, patId:string){
-    this.router.navigateByUrl(`/appointment/${slotId}/${doctorId}/${patId}`);
-  }
 
 }
 

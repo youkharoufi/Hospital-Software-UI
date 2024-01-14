@@ -18,8 +18,9 @@ import { FooterComponent } from './Footer/Footer.component';
 import { LoginDialogComponent } from './Dialogs/LoginDialog/LoginDialog.component';
 import { RegisterDialogComponent } from './Dialogs/RegisterDialog/RegisterDialog.component';
 import { ScheduleComponent } from './Shedule/Schedule.component';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { AppointmentComponent } from './Appointment/Appointment.component'; // the main connector
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -44,8 +45,10 @@ import { AppointmentComponent } from './Appointment/Appointment.component'; // t
     EffectsModule.forRoot([]),
     NGRXStoreModule,
     HttpClientModule,
-    FullCalendarModule,
-
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     //Angular Material Imports :
     AngularMaterialTheModule,
   ],

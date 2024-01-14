@@ -161,6 +161,23 @@ getAllDoctors$ = createEffect(() =>
     )
   );
 
+  getDoctorsById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.getDoctorsById),
+      switchMap((action) =>
+        this.backend.getDoctorsById(action.id).pipe(
+          map((filteredDoctor: ApplicationUser) =>
+            UserActions.getDoctorsByIdSuccess({ filteredDoctor })
+          ),
+          catchError((error) =>
+            of(UserActions.getDoctorsByIdFailure({ error }))
+          )
+
+        )
+      )
+    )
+  );
+
 
 
   constructor(private actions$: Actions, private backend: UserService, private _snackBar: MatSnackBar) { }

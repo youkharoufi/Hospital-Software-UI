@@ -62,7 +62,9 @@ export class HeaderComponent implements OnInit{
 
   logout(){
     localStorage.setItem('user', JSON.stringify(null));
-    window.location.reload();
     this.router.navigateByUrl('/');
+    setTimeout(()=>{
+      window.location.reload();
+    }, 1000)
   }
 }

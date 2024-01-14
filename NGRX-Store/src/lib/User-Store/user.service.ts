@@ -45,5 +45,8 @@ export class UserService {
     return this.http.get<ApplicationUser[]>(`${this.baseUrl}usermanagement/doctors-by-specialty/${spe}`);
   }
 
+  getDoctorsById(id: string): Observable<ApplicationUser>{
+    return this.http.get<ApplicationUser>(`${this.baseUrl}usermanagement/doctors-by-id/${id}`);
+  }
 
 }

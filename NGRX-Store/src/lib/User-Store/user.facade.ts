@@ -5,7 +5,7 @@ import * as fromUser from './user.reducers';
 import * as UserSelectors from './user.selectors';
 import { LoginUser } from '../Models/loginUser.model';
 import { RegisterUser } from '../Models/registerUser.model';
-import { getAllDoctors, getDoctorsBySpeciality, loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
+import { getAllDoctors, getDoctorsById, getDoctorsBySpeciality, loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
@@ -16,6 +16,7 @@ export class UserFacade {
   registrationStatus$ = this.store.pipe(select(UserSelectors.getRegistrationStatus));
   allDocs$ = this.store.pipe(select(UserSelectors.getAllDoctors));
   filteredDocs$ = this.store.pipe(select(UserSelectors.getFilteredDoctors));
+  filteredDoctor$ = this.store.pipe(select(UserSelectors.getFilteredDoctor))
 
   constructor(private store: Store<fromUser.UserPartialState>) { }
 
@@ -41,6 +42,10 @@ export class UserFacade {
 
   getDoctorsBySpeciality(spe:string){
     this.store.dispatch(getDoctorsBySpeciality({ spe }))
+  }
+
+  getDoctorById(id:string){
+    this.store.dispatch(getDoctorsById({ id }))
   }
 
 }

@@ -41,6 +41,7 @@ export class LoginDialogComponent {
       next:(st?:string)=>{
         if(st === 'success'){
           this.onNoClick();
+          window.location.reload();
           this.router.navigateByUrl('/');
 
         }else{

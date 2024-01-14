@@ -1,30 +1,7 @@
-<div class="weekly-calendar">
-  <div class="week-day" *ngFor="let day of weekDays">
-    <div class="day-label">{{ day }}</div>
-    <div class="hour-slot" *ngFor="let hour of hours">
-      <ng-container *ngIf="isSlotBooked(day, hour)">
-        <div class="booked-slot">
-          <span class="slot-details">
-            {{ hour }}:00 -
-            <span *ngIf="getBookedSlot(day, hour) as bookedSlot">
-              Booked (Slot ID: {{ bookedSlot.id }})
-            </span>
-          </span>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!isSlotBooked(day, hour)">
-        <ng-container *ngIf="getUnBookedSlot(day, hour) as unbookedSlot">
-        <div (click)="bookAppointment(unbookedSlot.id, docId, patientId)" class="available-slot">
-          <span class="slot-details">
-            {{ hour }}:00 -
-            <span *ngIf="getUnBookedSlot(day, hour) as unbookedSlot">
-              Booked (Slot ID: {{ unbookedSlot.id }})
-            </span>
-          </span>
-        </div>
-        </ng-container>
-
-      </ng-container>
-    </div>
-  </div>
-</div>
+<mwl-calendar-week-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [hourSegments]="1"
+  [dayStartHour]="9"
+  [dayEndHour]="17"
+  (eventClicked)="onSlotClick($event)"></mwl-calendar-week-view>
