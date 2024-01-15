@@ -13,17 +13,19 @@ export class AppointmentComponent {
 
   docId!:string;
   slotId!:string;
-  slot!:Slot;
+  slot?:Slot;
   doctor = this.userFacade.filteredDoctor$;
-  user!:ApplicationUser;
+  userId!:string;
 
   constructor(private route: ActivatedRoute, private slotService: SlotService,
     private userFacade:UserFacade, private _snackBar: MatSnackBar){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
-      this.docId = params['id'];
+      this.docId = params['doctorId'];
       this.slotId = params['slotId'];
+      this.userId = params['patientId'];
+
 
       this.slotService.findSlotById(this.slotId).subscribe({
         next:(value:Slot)=>{
@@ -31,13 +33,10 @@ export class AppointmentComponent {
         }
       });
 
-      this.userFacade.getDoctorById(this.docId);
+        this.userFacade.getDoctorById(this.docId);
+
 
   })
-
-  if(localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
-      this.user = JSON.parse(localStorage.getItem('user')!)
-  }
 
 
   }
@@ -49,7 +48,8 @@ export class AppointmentComponent {
   }
 
   bookAppointment(){
-    this.slotService.patientBooksSlot(this.user.id, this.docId, this.slotId).subscribe({
+    console.log(this.userId);
+    this.slotService.patientBooksSlot(this.userId, this.docId, this.slotId).subscribe({
       next:()=>{
         this.openSnackBar()
       },

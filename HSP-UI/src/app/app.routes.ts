@@ -10,5 +10,5 @@ export const appRoutes: Route[] = [
   {path:'about', component:AboutComponent},
   {path:'doctor-list', component:ListOfDoctorsComponent},
   {path:'doctor-schedule/:id', component:ScheduleComponent},
-  {path:'appointment/:slotId/:doctoreId/:patientId', component: AppointmentComponent}
+  {path:'appointment/:slotId/:doctorId/:patientId', component: AppointmentComponent}
 ];

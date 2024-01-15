@@ -22,6 +22,10 @@ export class SlotService {
     return this.http.post<Slot>(this.baseUrl+"slots/patient-books-slot/"+patientId+"/"+doctorId+"/"+slotId, {patientId, doctorId, slotId});
   }
 
+  generateNewSlots(doctorId:string): Observable<Slot>{
+    return this.http.post<Slot>(this.baseUrl+"slots/generate-new-slots/"+doctorId, doctorId);
+  }
+
   findSlotById(slotId:string):Observable<Slot>{
     return this.http.get<Slot>(this.baseUrl+"slots/find-slot-by-id/"+slotId);
   }

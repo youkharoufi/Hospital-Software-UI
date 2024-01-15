@@ -44,6 +44,7 @@ export class ScheduleComponent {
     const now = new Date();
     console.log(now);
 
+
     this.slotService.allSlotsByDoctorId(this.docId).subscribe(slots => {
 
       this.events = slots.map(slot => {
@@ -61,7 +62,7 @@ export class ScheduleComponent {
 
       })
 
-    console.log(this.events);
+
 
   })
   }
