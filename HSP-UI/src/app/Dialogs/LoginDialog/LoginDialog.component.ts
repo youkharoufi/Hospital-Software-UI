@@ -4,6 +4,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginUser, UserFacade } from '@hsi/NGRX-Store';
 import { Subscription } from 'rxjs';
+import { ErrorSnackBarComponent } from '../../Snackbars/Error-SnackBar/ErrorSnackBar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'hsi-login-dialog',
@@ -22,7 +24,7 @@ export class LoginDialogComponent {
   @ViewChild('loginForm') loginForm!: NgForm;
 
   constructor(public dialogRef: MatDialogRef<LoginDialogComponent>,
-    private userFacade : UserFacade, private router: Router){}
+    private userFacade : UserFacade, private router: Router, private _snackBar: MatSnackBar){}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -44,15 +46,16 @@ export class LoginDialogComponent {
           window.location.reload();
           this.router.navigateByUrl('/');
 
-        }else{
-          console.log("Login failed");
-          this.resetLoginForm();
         }
+      },
+      error:()=>{
+
+        this.openSnackBar();
+        this.resetLoginForm();
       }
-    })
 
-
-  }
+      })
+    }
 
   resetLoginForm() {
     this.loginUser = {
@@ -63,6 +66,12 @@ export class LoginDialogComponent {
     if (this.loginForm) {
       this.loginForm.resetForm();
     }
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(ErrorSnackBarComponent, {
+      duration:5000
+    });
   }
 
   ngOnDestroy() {

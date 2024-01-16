@@ -2,3 +2,20 @@
   cursor: pointer;
 }
 
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+#navbarmain {
+  float: right;
+}
+
+.toTheLeft{
+  margin-left:450px;
+}
+
+.buttons-in-nav{
+  margin-left:10px;
+}
+

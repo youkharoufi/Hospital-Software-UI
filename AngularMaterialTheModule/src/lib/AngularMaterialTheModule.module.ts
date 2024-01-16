@@ -11,13 +11,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 
 @NgModule({
   imports: [CommonModule, MatExpansionModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule,
-    MatToolbarModule, MatSnackBarModule, MatDialogModule, MatBadgeModule],
+    MatToolbarModule, MatSnackBarModule, MatDialogModule, MatBadgeModule, MatSelectModule],
   exports: [MatExpansionModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule,
-    MatToolbarModule, MatSnackBarModule, MatDialogModule, MatBadgeModule],
+    MatToolbarModule, MatSnackBarModule, MatDialogModule, MatBadgeModule, MatSelectModule],
 })
 export class AngularMaterialTheModule {}

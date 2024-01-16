@@ -6,6 +6,7 @@ import { ScheduleComponent } from './Shedule/Schedule.component';
 import { AppointmentComponent } from './Appointment/Appointment.component';
 import { PersonalScheduleComponent } from './Personal/PersonalSchedule.component';
 import { ChatMenuComponent } from './Chat/ChatMenu.component';
+import { RegisterDoctorComponent } from './Admin/RegisterDoctor/RegisterDoctor.component';
 
 export const appRoutes: Route[] = [
   {path:'', component:HomeComponent},
@@ -14,5 +15,6 @@ export const appRoutes: Route[] = [
   {path:'doctor-schedule/:id', component:ScheduleComponent},
   {path:'appointment/:slotId/:doctorId/:patientId', component: AppointmentComponent},
   {path:'personal-schedule', component: PersonalScheduleComponent},
-  {path:'chat', component: ChatMenuComponent}
+  {path:'chat', component: ChatMenuComponent},
+  {path:'create-doctor', component: RegisterDoctorComponent}
 ];

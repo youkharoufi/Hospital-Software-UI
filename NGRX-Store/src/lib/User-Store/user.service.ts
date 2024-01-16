@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { ApplicationUser } from '../Models/applicationUser.model';
 import { LoginUser } from '../Models/loginUser.model';
 import { environment } from '../environments/environment';
-import { RegisterUser } from '../Models/registerUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +20,12 @@ export class UserService {
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/login", loginUser);
   }
 
-  registerAdmin(registerUser: RegisterUser): Observable<ApplicationUser> {
+  registerAdmin(registerUser: FormData): Observable<ApplicationUser> {
 
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/register-admin", registerUser);
   }
 
-  registerDoctor(registerUser: RegisterUser): Observable<ApplicationUser> {
+  registerDoctor(registerUser: FormData): Observable<ApplicationUser> {
 
     return this.http.post<ApplicationUser>(this.baseUrl + "userManagement/register-doctor", registerUser);
   }

@@ -1,7 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { ApplicationUser } from "../Models/applicationUser.model";
 import { LoginUser } from "../Models/loginUser.model";
-import { RegisterUser } from "../Models/registerUser.model";
 
 
 
@@ -53,7 +52,7 @@ export const loginUserFailure = createAction(
 
 export const registerAdminUserAction = createAction(
   UserActionsTypes.REGISTER_ADMIN_USER,
-  props<{ registerAdminUser: RegisterUser }>()
+  props<{ registerAdminUser: FormData }>()
 );
 
 export const registerAdminUserSuccess = createAction(
@@ -67,17 +66,17 @@ export const registerAdminUserFailure = createAction(
 );
 
 export const registerDoctorUserAction = createAction(
-  UserActionsTypes.REGISTER_ADMIN_USER,
-  props<{ registerDoctorUser: RegisterUser }>()
+  UserActionsTypes.REGISTER_DOCTOR_USER,
+  props<{ registerDoctorUser: FormData }>()
 );
 
 export const registerDoctorUserSuccess = createAction(
-  UserActionsTypes.REGISTER_ADMIN_USER_SUCCESS,
+  UserActionsTypes.REGISTER_DOCTOR_USER_SUCCESS,
   props<{ registeredDoctorUser: ApplicationUser }>()
 );
 
 export const registerDoctorUserFailure = createAction(
-  UserActionsTypes.REGISTER_ADMIN_USER_ERROR,
+  UserActionsTypes.REGISTER_DOCTOR_USER_ERROR,
   props<{ error: Error }>()
 );
 

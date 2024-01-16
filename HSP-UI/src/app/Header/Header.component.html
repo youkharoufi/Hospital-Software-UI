@@ -22,14 +22,14 @@
   <nav class="navbar navbar-expand-lg navigation" id="navbar">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-          <img src="assets/images/logo.png" alt="" class="img-fluid">
+          <img src="assets/hospital-logo.png" width="60px" alt="" class="img-fluid">
         </a>
 
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
       <span class="icofont-navigation-menu"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarmain">
+      <div class="collapse navbar-collapse toTheLeft" id="navbarmain">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
         <a class="nav-link" routerLink="/">Home</a>
@@ -47,16 +47,19 @@
           <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
           <ul class="dropdown-menu" aria-labelledby="dropdown03">
             <li><a class="dropdown-item" routerLink="/doctor-list">Doctors</a></li>
-            <li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
           </ul>
           </li>
 
           <li class="nav-item active">
-            <a *ngIf="user !== null && user !== undefined && user.roleName === 'Doctor'" matBadge="{{doctorUnreadMessagesCount}}" matBadgePosition="before" matBadgeColor="warn" class="nav-link hand" routerLink="/chat">Chat</a>
+            <button mat-flat-button color="primary" *ngIf="user !== null && user !== undefined && user.roleName === 'Doctor'" matBadge="{{doctorUnreadMessagesCount}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" routerLink="/chat">Chat</button>
           </li>
 
           <li class="nav-item active">
-            <a *ngIf="user !== null && user !== undefined && user.roleName === 'Patient'" matBadge="{{patientUnreadMessagesCount}}" matBadgePosition="before" matBadgeColor="warn" class="nav-link hand" routerLink="/chat">Chat</a>
+            <button mat-flat-button *ngIf="user !== null && user !== undefined && (user.roleName === 'Patient' || user.roleName === 'Admin')" matBadge="{{patientUnreadMessagesCount}}" matBadgePosition="above" matBadgeColor="warn" class="hand buttons-in-nav" color="primary" routerLink="/chat">Chat</button>
+          </li>
+
+          <li class="nav-item active">
+            <button mat-flat-button *ngIf="user !== null && user !== undefined && user.roleName === 'Admin'" class="hand buttons-in-nav" color="primary" routerLink="/create-doctor">New User</button>
           </li>
 
           <li class="nav-item active">

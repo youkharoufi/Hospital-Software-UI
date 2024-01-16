@@ -23,6 +23,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { PersonalScheduleComponent } from './Personal/PersonalSchedule.component';
 import { ChatMenuComponent } from './Chat/ChatMenu.component';
+import { RegisterDoctorComponent } from './Admin/RegisterDoctor/RegisterDoctor.component';
+import { ErrorSnackBarComponent } from './Snackbars/Error-SnackBar/ErrorSnackBar.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { ChatMenuComponent } from './Chat/ChatMenu.component';
     AppointmentComponent,
     PersonalScheduleComponent,
     ChatMenuComponent,
+    RegisterDoctorComponent,
+    ErrorSnackBarComponent,
   ],
   imports: [
     BrowserModule,

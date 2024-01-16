@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Slot, SlotService, UserFacade } from '@hsi/NGRX-Store';
 import { AppointmentSnackbarComponent } from '../Snackbars/Appointment-Snackbar/Appointment-Snackbar.component';
+import { ErrorSnackBarComponent } from '../Snackbars/Error-SnackBar/ErrorSnackBar.component';
 
 @Component({
   selector: 'hsi-appointment',
@@ -54,8 +55,14 @@ export class AppointmentComponent {
         this.openSnackBar()
       },
       error:()=>{
-        console.log("Failed to book appointment");
+        this.openSnackBar2();
       }
     })
+  }
+
+  openSnackBar2() {
+    this._snackBar.openFromComponent(ErrorSnackBarComponent, {
+      duration:5000
+    });
   }
 }

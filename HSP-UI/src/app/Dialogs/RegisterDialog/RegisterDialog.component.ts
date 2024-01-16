@@ -4,6 +4,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginUser, RegisterUser, UserFacade } from '@hsi/NGRX-Store';
 import { Subscription } from 'rxjs';
+import { ErrorSnackBarComponent } from '../../Snackbars/Error-SnackBar/ErrorSnackBar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'hsi-register-dialog',
@@ -33,10 +35,11 @@ export class RegisterDialogComponent {
   loginStatusSubscription!: Subscription;
 
   constructor(private router: Router, private userFacade : UserFacade,
-    public dialogRef: MatDialogRef<RegisterDialogComponent>){}
+    public dialogRef: MatDialogRef<RegisterDialogComponent>, private _snackBar: MatSnackBar){}
 
 
   onNoClick(){
+    this.resetRegisterForm();
     this.dialogRef.close();
   }
 
@@ -69,7 +72,7 @@ export class RegisterDialogComponent {
           this.onNoClick();
           this.router.navigateByUrl('/');
         }else{
-          console.log("Login failed");
+          this.openSnackBar();
           this.resetRegisterForm();
         }
       }
@@ -84,7 +87,7 @@ export class RegisterDialogComponent {
     } else {
         // Handle the case where no file was selected
     }
-}
+  }
 
 
   registerPatient() {
@@ -114,17 +117,20 @@ export class RegisterDialogComponent {
           if(regStatus === 'success'){
             this.registerLogin(loginUserCustom);
 
-          }else{
-            this.resetRegisterForm();
-            this.onNoClick();
-          }
-        }, 2000);
+        }}, 2000);
 
       },
-      error: (err) => {
-        console.error("Error occurred", err);
+      error: () => {
+        this.resetRegisterForm();
+            this.onNoClick();
       }
     })
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(ErrorSnackBarComponent, {
+      duration:5000
+    });
   }
 
   ngOnDestroy() {

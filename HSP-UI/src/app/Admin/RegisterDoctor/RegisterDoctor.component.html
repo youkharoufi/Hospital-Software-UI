@@ -1,0 +1,71 @@
+<div class="reg-form">
+  <h1 mat-dialog-title>New User Registration</h1>
+  <div mat-dialog-content>
+  <form #registerForm="ngForm" (submit)="registerDoctor()">
+    <div>
+    <mat-form-field style="margin-right:10px">
+      <mat-label>Firstname</mat-label>
+      <input matInput type="text" name="firstname" #firstname="ngModel" [(ngModel)]="registerUser.firstname" required>
+      <span class="span-color" *ngIf="firstname.errors?.['required'] && firstname.touched">Firstname is required</span>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Lastname</mat-label>
+      <input matInput type="text" name="lastname" #lastname="ngModel" [(ngModel)]="registerUser.lastname" required>
+      <span class="span-color" *ngIf="lastname.errors?.['required'] && lastname.touched">Lastname is required</span>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field style="margin-right:10px">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="regPassword" #regPassword="ngModel" [(ngModel)]="registerUser.password" required>
+      <span class="span-color" *ngIf="regPassword.errors?.['required'] && regPassword.touched">Password is required</span>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Password Confirmation</mat-label>
+      <input matInput type="password" name="passwordConf" #passwordConf="ngModel" [(ngModel)]="passwordConfirmation" required>
+      <span class="span-color" *ngIf="passwordConf.errors?.['required'] && passwordConf.touched">The password confirmation is required</span>
+      <span class="span-color" *ngIf="passwordConf.value !== this.registerUser.password && passwordConf.touched">The password confirmation must match your password</span>
+    </mat-form-field>
+  </div>
+
+  <div>
+      <mat-label>Profile Picture</mat-label>
+      <input type="file" name="pic" #picture="ngModel" [(ngModel)]="pic" (change)="onFileSelected($event)" required>
+      <span class="span-color" *ngIf="picture.errors?.['required'] && picture.touched">Profile picture is required</span>
+  </div>
+
+  <div>
+    <mat-form-field style="margin-right:10px">
+      <mat-label>Role (Doctor, Administrator or Patient)</mat-label>
+      <mat-select #role="ngModel" [(ngModel)]="registerUser.roleName" name="role" required>
+        <mat-option value="Doctor">Doctor</mat-option>
+        <mat-option value="Patient">Patient</mat-option>
+        <mat-option value="Admin">Administrator</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Medical Speciality</mat-label>
+      <mat-select #speciality="ngModel" [(ngModel)]="registerUser.speciality" name="speciality" required>
+        <mat-option *ngFor="let speciality of specialities" [value]="speciality">{{speciality}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button type="submit" class="reg-btn" [disabled]="registerForm.invalid" color="primary">Register</button>
+      </div>
+  </form>
+  </div>
+
+
+
+</div>

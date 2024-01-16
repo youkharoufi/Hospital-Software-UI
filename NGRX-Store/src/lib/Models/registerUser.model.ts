@@ -4,5 +4,6 @@ export interface RegisterUser{
   password:string;
   badgeNumber?:number;
   pictureUrl:string;
-  roleName:string
+  roleName:string;
+  speciality?:string;
 }
