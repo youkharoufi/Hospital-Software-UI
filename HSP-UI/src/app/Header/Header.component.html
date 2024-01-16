@@ -35,15 +35,15 @@
         <a class="nav-link" routerLink="/">Home</a>
         </li>
 
-          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="department.html" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Department <i class="icofont-thin-down"></i></a>
-          <ul class="dropdown-menu" aria-labelledby="dropdown02">
-            <li><a class="dropdown-item" href="department.html">Departments</a></li>
-            <li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
-          </ul>
+          <li>
+          <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Patient'" [matBadge]="patientAppointments" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
           </li>
 
-          <li class="nav-item dropdown">
+          <li>
+            <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Doctor'" matBadge="{{doctorAppointments}}" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
+          </li>
+
+          <li *ngIf="user?.roleName === 'Patient'" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
           <ul class="dropdown-menu" aria-labelledby="dropdown03">
             <li><a class="dropdown-item" routerLink="/doctor-list">Doctors</a></li>
@@ -52,7 +52,11 @@
           </li>
 
           <li class="nav-item active">
-            <a *ngIf="user !== null && user !== undefined" class="nav-link hand" routerLink="/chat">Chat</a>
+            <a *ngIf="user !== null && user !== undefined && user.roleName === 'Doctor'" matBadge="{{doctorUnreadMessagesCount}}" matBadgePosition="before" matBadgeColor="warn" class="nav-link hand" routerLink="/chat">Chat</a>
+          </li>
+
+          <li class="nav-item active">
+            <a *ngIf="user !== null && user !== undefined && user.roleName === 'Patient'" matBadge="{{patientUnreadMessagesCount}}" matBadgePosition="before" matBadgeColor="warn" class="nav-link hand" routerLink="/chat">Chat</a>
           </li>
 
           <li class="nav-item active">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationUser, Slot, SlotService, UserFacade } from '@hsi/NGRX-Store';
+import { Slot, SlotService, UserFacade } from '@hsi/NGRX-Store';
 import { AppointmentSnackbarComponent } from '../Snackbars/Appointment-Snackbar/Appointment-Snackbar.component';
 
 @Component({

@@ -16,6 +16,9 @@
   <!-- Slick Slider  CSS -->
   <link rel="stylesheet" href="assets/plugins/slick-carousel/slick/slick.css">
   <link rel="stylesheet" href="assets/plugins/slick-carousel/slick/slick-theme.css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -42,5 +45,24 @@
 
        <script src="assets/js/script.js"></script>
        <script src="assets/js/contact.js"></script>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+    $(".heading-compose").click(function() {
+      $(".side-two").css({
+        "left": "0"
+      });
+    });
+
+    $(".newMessage-back").click(function() {
+      $(".side-two").css({
+        "left": "-100%"
+      });
+    });
+})
+</script>
   </body>
 </html>

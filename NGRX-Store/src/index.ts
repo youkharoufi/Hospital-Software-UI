@@ -3,7 +3,9 @@ export * from './lib/Models/registerUser.model';
 export * from './lib/Models/applicationUser.model';
 export * from './lib/Models/loginUser.model';
 export * from './lib/Models/customeCalendarEvent';
-export * from './lib/Models/slots'
+export * from './lib/Models/slots';
+export * from './lib/Models/message.model';
 
 export * from './lib/User-Store/user.facade';
-export * from  './lib/Slot-Service/slot.service'
+export * from  './lib/Slot-Service/slot.service';
+export * from './lib/Chat-Service/chat.service';

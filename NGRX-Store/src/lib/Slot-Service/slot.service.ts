@@ -30,5 +30,20 @@ export class SlotService {
     return this.http.get<Slot>(this.baseUrl+"slots/find-slot-by-id/"+slotId);
   }
 
+  getDoctorSlots(doctorId:string):Observable<Slot[]>{
+    return this.http.get<Slot[]>(this.baseUrl+"slots/all-doctor-slots/"+doctorId);
+  }
+
+  getPatientSlots(patientId:string):Observable<Slot[]>{
+    return this.http.get<Slot[]>(this.baseUrl+"slots/all-patient-slots/"+patientId);
+  }
+
+  getDoctorSlotCount(doctorId:string):Observable<number>{
+    return this.http.get<number>(this.baseUrl+"slots/get-doctor-slots-count/"+doctorId);
+  }
+
+  getPatientSlotCount(patientId:string):Observable<number>{
+    return this.http.get<number>(this.baseUrl+"slots/get-patient-slots-count/"+patientId);
+  }
 
 }

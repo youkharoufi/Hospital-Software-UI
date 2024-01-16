@@ -21,6 +21,8 @@ import { ScheduleComponent } from './Shedule/Schedule.component';
 import { AppointmentComponent } from './Appointment/Appointment.component'; // the main connector
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { PersonalScheduleComponent } from './Personal/PersonalSchedule.component';
+import { ChatMenuComponent } from './Chat/ChatMenu.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     RegisterDialogComponent,
     ScheduleComponent,
     AppointmentComponent,
+    PersonalScheduleComponent,
+    ChatMenuComponent,
   ],
   imports: [
     BrowserModule,
