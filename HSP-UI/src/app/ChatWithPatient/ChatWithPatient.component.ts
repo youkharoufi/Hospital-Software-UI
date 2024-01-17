@@ -2,42 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationUser, ChatService, Message, UserFacade } from '@hsi/NGRX-Store';
 
 @Component({
-  selector: 'hsi-chat-menu',
-  templateUrl: './ChatMenu.component.html',
-  styleUrl: './ChatMenu.component.scss',
+  selector: 'hsi-chat-with-patient',
+  templateUrl: './ChatWithPatient.component.html',
+  styleUrl: './ChatWithPatient.component.scss',
 })
-export class ChatMenuComponent implements OnInit{
+export class ChatWithPatientComponent implements OnInit{
 
-  doctors$ = this.userFacade.allDocs$;
-  doctors!:ApplicationUser[];
-  filteredDoctors : ApplicationUser[] = []
+  patients$ = this.userFacade.allPatients$;
+  patients!:ApplicationUser[];
+  filteredPatients : ApplicationUser[] = []
   user!:ApplicationUser;
 
   receivedMessages: Message[] = [];
   sentMessages: Message[] = [];
 
-  doctor?:ApplicationUser;
+  patient?:ApplicationUser;
 
   combinedMessages: Message[] = [];
 
   messageContent:string="";
 
-  unreadPatientMessagesCount$ = this.chatService.unreadPatientMessagesCount$;
+  searchForPatient = "";
 
-  searchForDoctor = "";
+  unreadDoctorMessagesCount$ = this.chatService.unreadDoctorMessagesCount$;
 
-  readMessages!: Message[];
+  readMessages!:Message[];
 
   constructor(private userFacade: UserFacade, private chatService: ChatService){}
 
   ngOnInit(): void{
 
-    this.userFacade.getAllDoctors();
+    this.userFacade.getAllPatients();
 
-    this.doctors$.subscribe({
-      next:(value?:ApplicationUser[])=>{
-        this.doctors = value!;
-        this.filteredDoctors = [...this.doctors];
+    this.patients$.subscribe({
+      next:(pats?:ApplicationUser[])=>{
+        this.patients = pats!;
+        this.filteredPatients = [...this.patients];
       }
     })
 
@@ -47,14 +47,14 @@ export class ChatMenuComponent implements OnInit{
       this.user = localStoring;
     }
 
-    if(this.doctor !== undefined && this.doctor !== null){
-      this.chatService.getAllMessageFromDoctorToPatient(this.doctor?.id, this.user.id).subscribe({
+    if(this.patient !== undefined && this.patient !== null){
+      this.chatService.getAllMessageFromPatientToDoctor(this.patient?.id, this.user.id).subscribe({
         next:(value:Message[])=>{
           this.receivedMessages = value;
         }
       });
 
-      this.chatService.getAllMessageFromPatientToDoctor(this.doctor?.id, this.user.id).subscribe({
+      this.chatService.getAllMessageFromDoctorToPatient(this.patient?.id, this.user.id).subscribe({
         next:(value:Message[])=>{
           this.sentMessages = value;
         }
@@ -72,53 +72,54 @@ export class ChatMenuComponent implements OnInit{
   }
 
   setUserToChatWith(doctor:ApplicationUser){
-    this.doctor= doctor;
+    this.patient= doctor;
 
-    this.chatService.getAllMessageFromDoctorToPatient(this.doctor.id, this.user.id).subscribe({
+    this.chatService.getAllMessageFromPatientToDoctor(this.patient.id, this.user.id).subscribe({
       next:(value:Message[])=>{
         this.receivedMessages = value;
         this.combineAndSortMessages();
       }
     });
 
-    this.chatService.getAllMessageFromPatientToDoctor(this.doctor?.id, this.user.id).subscribe({
+    this.chatService.getAllMessageFromDoctorToPatient(this.patient?.id, this.user.id).subscribe({
       next:(value:Message[])=>{
         this.sentMessages = value;
         this.combineAndSortMessages();
       }
     });
 
-    this.chatService.onPatientReadsMessages(this.doctor?.id, this.user.id).subscribe({
-      next:(readMessages: Message[])=>{
-        this.readMessages = readMessages
-        this.chatService.patientUnreadMessagesCount(this.user.id).subscribe({
+    this.chatService.onDoctorReadsMessages(this.user?.id, this.patient?.id).subscribe({
+      next:(value: Message[])=>{
+        this.readMessages = value;
+
+        this.chatService.doctorUnreadMessagesCount(this.user.id).subscribe({
           next:(value:number)=>{
             if(value === 0) return;
+
             console.log("length :"+this.readMessages.length+" value : "+value)
-            this.chatService.updatePatientUnreadMessagesCount(this.readMessages.length - value)
+            this.chatService.updateDoctorUnreadMessagesCount(this.readMessages.length - value)
 
           }
         })
       }
-    })
+    });
 
 
   }
 
   sendMessage(){
-    console.log(this.messageContent);
     const messageFromForm = new FormData();
     messageFromForm.append('content', this.messageContent);
 
     const newMessage = {
       senderId: this.user.id,
-      receivingId: this.doctor!.id,
+      receivingId: this.patient!.id,
       content: this.messageContent,
       time: new Date()
     }
 
     if(this.messageContent !== ""){
-      this.chatService.sendMessageFromPatientToDoctor(this.doctor?.id, this.user.id, messageFromForm).subscribe({
+      this.chatService.sendMessageFromPatientToDoctor(this.patient?.id, this.user.id, messageFromForm).subscribe({
         next:()=>{
           this.sentMessages.push(newMessage); // Add the new message to the sent messages list
           this.combineAndSortMessages();
@@ -131,11 +132,12 @@ export class ChatMenuComponent implements OnInit{
     }
   }
 
+
   filterSearch(searchInput: string) {
     if (!searchInput) {
-      this.filteredDoctors = [...this.doctors];
+      this.filteredPatients = [...this.patients];
     } else {
-      this.filteredDoctors = this.doctors.filter((d) =>
+      this.filteredPatients = this.patients.filter((d) =>
         d.firstname.toLowerCase().includes(searchInput.toLowerCase()) ||
         d.lastname.toLowerCase().includes(searchInput.toLowerCase())
       );
@@ -144,3 +146,4 @@ export class ChatMenuComponent implements OnInit{
 
 
 }
+

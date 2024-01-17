@@ -51,7 +51,7 @@ export class ScheduleComponent {
 
         return {
           start: new Date(slot.slotTime),
-          title: slot.booked ? 'Booked' : 'Available',
+          title: new Date(slot.slotTime) < now ? 'Unavailable' : slot.booked ? 'Booked' : "Available",
           color: slot.booked || now > new Date(slot.slotTime) ? colors.red : colors.green,
           meta: {
             slotId: slot.id

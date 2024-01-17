@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Message } from '../Models/message.model';
-import * as signalR from "@microsoft/signalr";
 
 
 @Injectable({
@@ -13,13 +12,22 @@ export class ChatService {
 
   baseUrl = environment.API_URL;
 
-  private hubConnection!: signalR.HubConnection;
+  private unreadPatientMessagesCount = new BehaviorSubject<number>(0);
+  public unreadPatientMessagesCount$ = this.unreadPatientMessagesCount.asObservable();
 
+  private unreadDoctorMessagesCount = new BehaviorSubject<number>(0);
+  public unreadDoctorMessagesCount$ = this.unreadDoctorMessagesCount.asObservable();
 
   constructor(private http: HttpClient) { }
 
 
+  updatePatientUnreadMessagesCount(count: number) {
+    this.unreadPatientMessagesCount.next(count);
+  }
 
+  updateDoctorUnreadMessagesCount(count: number) {
+    this.unreadDoctorMessagesCount.next(count);
+  }
 
   sendMessageFromDoctorToPatient(doctorId:string, patientId:string, content:string): Observable<Message>{
     const body = { content };
@@ -49,10 +57,20 @@ export class ChatService {
   }
 
   doctorUnreadMessagesCount(doctorId:string): Observable<number>{
+    this.http.get<number>(this.baseUrl+"messages/on-doctor-read-messages-count/"+doctorId).subscribe({
+      next:(value:number)=>{
+        this.unreadDoctorMessagesCount.next(value);
+      }
+    })
     return this.http.get<number>(this.baseUrl+"messages/on-doctor-read-messages-count/"+doctorId);
   }
 
   patientUnreadMessagesCount(patientId:string): Observable<number>{
+    this.http.get<number>(this.baseUrl+"messages/on-patient-read-messages-count/"+patientId).subscribe({
+      next:(value:number)=>{
+        this.unreadPatientMessagesCount.next(value);
+      }
+    })
     return this.http.get<number>(this.baseUrl+"messages/on-patient-read-messages-count/"+patientId);
   }
 

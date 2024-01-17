@@ -5,7 +5,7 @@
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput type="text" name="username" #username="ngModel" [(ngModel)]="loginUser.userName" required>
-      <span class="span-color" *ngIf="username.errors?.['required'] && username.touched">* Username is required</span>
+      <span class="span-color" *ngIf="username.errors?.['required'] && username.dirty">* Username is required</span>
     </mat-form-field>
 
     <mat-form-field>

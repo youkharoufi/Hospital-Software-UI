@@ -25,6 +25,7 @@ import { PersonalScheduleComponent } from './Personal/PersonalSchedule.component
 import { ChatMenuComponent } from './Chat/ChatMenu.component';
 import { RegisterDoctorComponent } from './Admin/RegisterDoctor/RegisterDoctor.component';
 import { ErrorSnackBarComponent } from './Snackbars/Error-SnackBar/ErrorSnackBar.component';
+import { ChatWithPatientComponent } from './ChatWithPatient/ChatWithPatient.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ErrorSnackBarComponent } from './Snackbars/Error-SnackBar/ErrorSnackBar
     ChatMenuComponent,
     RegisterDoctorComponent,
     ErrorSnackBarComponent,
+    ChatWithPatientComponent,
   ],
   imports: [
     BrowserModule,

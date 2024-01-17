@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import * as fromUser from './user.reducers';
 import * as UserSelectors from './user.selectors';
 import { LoginUser } from '../Models/loginUser.model';
-import { getAllDoctors, getDoctorsById, getDoctorsBySpeciality, loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
+import { getAllDoctors, getAllPatients, getDoctorsById, getDoctorsBySpeciality, loginUserAction, registerAdminUserAction, registerDoctorUserAction, registerPatientUserAction } from './user.actions';
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
@@ -15,7 +15,9 @@ export class UserFacade {
   registrationStatus$ = this.store.pipe(select(UserSelectors.getRegistrationStatus));
   allDocs$ = this.store.pipe(select(UserSelectors.getAllDoctors));
   filteredDocs$ = this.store.pipe(select(UserSelectors.getFilteredDoctors));
-  filteredDoctor$ = this.store.pipe(select(UserSelectors.getFilteredDoctor))
+  filteredDoctor$ = this.store.pipe(select(UserSelectors.getFilteredDoctor));
+  allPatients$ = this.store.pipe(select(UserSelectors.getAllPatients))
+
 
   constructor(private store: Store<fromUser.UserPartialState>) { }
 
@@ -37,6 +39,10 @@ export class UserFacade {
 
   getAllDoctors(){
     this.store.dispatch(getAllDoctors())
+  }
+
+  getAllPatients(){
+    this.store.dispatch(getAllPatients())
   }
 
   getDoctorsBySpeciality(spe:string){

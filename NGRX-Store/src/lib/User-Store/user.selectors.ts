@@ -26,6 +26,11 @@ export const getAllDoctors = createSelector(
   (state: State) => state.allDocs
 );
 
+export const getAllPatients = createSelector(
+  getAccountState,
+  (state: State) => state.allPatients
+);
+
 export const getFilteredDoctors = createSelector(
   getAccountState,
   (state: State) => state.filteredDocs

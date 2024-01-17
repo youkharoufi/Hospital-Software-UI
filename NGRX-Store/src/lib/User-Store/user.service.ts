@@ -40,6 +40,11 @@ export class UserService {
     return this.http.get<ApplicationUser[]>(this.baseUrl + "userManagement/all-doctors");
   }
 
+  getAllPatients(): Observable<ApplicationUser[]> {
+
+    return this.http.get<ApplicationUser[]>(this.baseUrl + "userManagement/all-patients");
+  }
+
   getDoctorsBySpeciality(spe: string): Observable<ApplicationUser[]>{
     return this.http.get<ApplicationUser[]>(`${this.baseUrl}usermanagement/doctors-by-specialty/${spe}`);
   }

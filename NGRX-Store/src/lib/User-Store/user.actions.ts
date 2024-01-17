@@ -26,6 +26,10 @@ export enum UserActionsTypes {
   GET_ALL_DOCTORS_SUCCESS = '[User] Get All Doctors Success',
   GET_ALL_DOCTORS_FAILURE = '[User] Get All Doctors Failure',
 
+  GET_ALL_PATIENTS = '[User] Get All Patients',
+  GET_ALL_PATIENTS_SUCCESS = '[User] Get All Patients Success',
+  GET_ALL_PATIENTS_FAILURE = '[User] Get All Patients Failure',
+
   GET_DOCTORS_BY_SPECIALITY = '[User] Get Doctors by speciality',
   GET_DOCTORS_BY_SPECIALITY_SUCCESS = '[User] Get Doctors by speciality Success',
   GET_DOCTORS_BY_SPECIALITY_FAILURE = '[User] Get Doctors by speciality Failure',
@@ -106,6 +110,20 @@ export const getAllDoctorsSuccess = createAction(
 
 export const getAllDoctorsFailure = createAction(
   UserActionsTypes.GET_ALL_DOCTORS_FAILURE,
+  props<{ error: Error }>()
+);
+
+export const getAllPatients = createAction(
+  UserActionsTypes.GET_ALL_PATIENTS
+);
+
+export const getAllPatientsSuccess = createAction(
+  UserActionsTypes.GET_ALL_PATIENTS_SUCCESS,
+  props<{ allPatients: ApplicationUser[] }>()
+);
+
+export const getAllPatientsFailure = createAction(
+  UserActionsTypes.GET_ALL_PATIENTS_FAILURE,
   props<{ error: Error }>()
 );
 

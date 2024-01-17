@@ -144,6 +144,23 @@ getAllDoctors$ = createEffect(() =>
     )
   );
 
+  getAllPatients$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.getAllPatients),
+      switchMap(() =>
+        this.backend.getAllPatients().pipe(
+          map((allPatients: ApplicationUser[]) =>
+            UserActions.getAllPatientsSuccess({ allPatients })
+          ),
+          catchError((error) =>
+            of(UserActions.getAllPatientsFailure({ error }))
+          )
+
+        )
+      )
+    )
+  );
+
   getDoctorsBySpeciality$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.getDoctorsBySpeciality),

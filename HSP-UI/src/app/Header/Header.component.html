@@ -51,11 +51,11 @@
           </li>
 
           <li class="nav-item active">
-            <button mat-flat-button color="primary" *ngIf="user !== null && user !== undefined && user.roleName === 'Doctor'" matBadge="{{doctorUnreadMessagesCount}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" routerLink="/chat">Chat</button>
+            <button mat-flat-button color="primary" *ngIf="user !== null && user !== undefined && user.roleName === 'Doctor'" matBadge="{{unreadDoctorMessagesCount$ | async}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" routerLink="/chat-with-patient">Chat</button>
           </li>
 
           <li class="nav-item active">
-            <button mat-flat-button *ngIf="user !== null && user !== undefined && (user.roleName === 'Patient' || user.roleName === 'Admin')" matBadge="{{patientUnreadMessagesCount}}" matBadgePosition="above" matBadgeColor="warn" class="hand buttons-in-nav" color="primary" routerLink="/chat">Chat</button>
+            <button mat-flat-button *ngIf="user !== null && user !== undefined && (user.roleName === 'Patient' || user.roleName === 'Admin')" matBadge="{{unreadPatientMessagesCount$ | async}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" color="primary" routerLink="/chat-with-doctor">Chat</button>
           </li>
 
           <li class="nav-item active">

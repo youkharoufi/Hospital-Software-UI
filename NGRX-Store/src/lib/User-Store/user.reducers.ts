@@ -16,6 +16,7 @@ export interface State extends EntityState<ApplicationUser> {
   allDocs?:ApplicationUser[];
   filteredDocs?:ApplicationUser[];
   filteredDoctor?:ApplicationUser;
+  allPatients?:ApplicationUser[];
 }
 
 export interface UserPartialState {
@@ -33,7 +34,8 @@ export const initialState: State = userAdapter.getInitialState({
   registrationStatus:'pending',
   allDocs:[],
   filteredDocs:[],
-  filteredDoctor:undefined
+  filteredDoctor:undefined,
+  allPatients:[]
 });
 
 
@@ -111,6 +113,19 @@ export const userReducer = createReducer(
     ({ ...state, loaded: true, allDocs })
   ),
   on(UserActions.getAllDoctorsFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+
+  on(UserActions.getAllPatients, (state) => ({
+    ...state,
+    loaded: false,
+    error: undefined,
+  })),
+  on(UserActions.getAllPatientsSuccess, (state, { allPatients }) =>
+    ({ ...state, loaded: true, allPatients })
+  ),
+  on(UserActions.getAllPatientsFailure, (state, { error }) => ({
     ...state,
     error,
   })),
