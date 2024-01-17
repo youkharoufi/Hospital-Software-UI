@@ -52,7 +52,9 @@ export class AppointmentComponent {
     console.log(this.userId);
     this.slotService.patientBooksSlot(this.userId, this.docId, this.slotId).subscribe({
       next:()=>{
-        this.openSnackBar()
+        this.openSnackBar();
+        this.slotService.updateSlotCountForPatients();
+        this.slotService.updateSlotCountForDoctors();
       },
       error:()=>{
         this.openSnackBar2();

@@ -36,11 +36,11 @@
         </li>
 
           <li>
-          <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Patient'" [matBadge]="patientAppointments" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
+          <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Patient'" matBadge="{{slotCountForPatients$ | async}}" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
           </li>
 
           <li>
-            <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Doctor'" matBadge="{{doctorAppointments}}" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
+            <button routerLink="personal-schedule" *ngIf="user?.roleName === 'Doctor'" matBadge="{{slotCountForDoctors$ | async}}" matBadgePosition="before" matBadgeColor="accent" color="primary" mat-flat-button>Appointments</button>
           </li>
 
           <li *ngIf="user?.roleName === 'Patient'" class="nav-item dropdown">
@@ -55,7 +55,7 @@
           </li>
 
           <li class="nav-item active">
-            <button mat-flat-button *ngIf="user !== null && user !== undefined && (user.roleName === 'Patient' || user.roleName === 'Admin')" matBadge="{{unreadPatientMessagesCount$ | async}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" color="primary" routerLink="/chat-with-doctor">Chat</button>
+            <button mat-flat-button *ngIf="user !== null && user !== undefined && user.roleName === 'Patient'" matBadge="{{unreadPatientMessagesCount$ | async}}" matBadgePosition="after" matBadgeColor="warn" class="hand buttons-in-nav" color="primary" routerLink="/chat-with-doctor">Chat</button>
           </li>
 
           <li class="nav-item active">

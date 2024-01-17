@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Slot } from '../Models/slots';
 
@@ -11,8 +11,21 @@ export class SlotService {
 
   baseUrl = environment.API_URL;
 
+  private slotCountForDocs = new BehaviorSubject<number>(0);
+  public slotCountForDocs$ = this.slotCountForDocs.asObservable();
+
+  private slotCountForPatients = new BehaviorSubject<number>(0);
+  public slotCountForPatients$ = this.slotCountForPatients.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  updateSlotCountForDoctors(){
+    this.slotCountForDocs.next(this.slotCountForDocs.getValue() + 1);
+  }
+
+  updateSlotCountForPatients(){
+    this.slotCountForPatients.next(this.slotCountForPatients.getValue() + 1);
+  }
 
   allSlotsByDoctorId(doctorId:string): Observable<Slot[]>{
     return this.http.get<Slot[]>(this.baseUrl+"slots/available-slots/"+doctorId)
@@ -39,10 +52,20 @@ export class SlotService {
   }
 
   getDoctorSlotCount(doctorId:string):Observable<number>{
+    this.http.get<number>(this.baseUrl+"slots/get-doctor-slots-count/"+doctorId).subscribe({
+      next:(value:number)=>{
+        this.slotCountForDocs.next(value)
+      }
+    })
     return this.http.get<number>(this.baseUrl+"slots/get-doctor-slots-count/"+doctorId);
   }
 
   getPatientSlotCount(patientId:string):Observable<number>{
+    this.http.get<number>(this.baseUrl+"slots/get-patient-slots-count/"+patientId).subscribe({
+      next:(value:number)=>{
+        this.slotCountForPatients.next(value);
+      }
+    })
     return this.http.get<number>(this.baseUrl+"slots/get-patient-slots-count/"+patientId);
   }
 

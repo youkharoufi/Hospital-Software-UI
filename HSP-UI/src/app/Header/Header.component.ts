@@ -25,6 +25,9 @@ export class HeaderComponent implements OnInit{
   unreadPatientMessagesCount$ = this.chatService.unreadPatientMessagesCount$;
   unreadDoctorMessagesCount$ = this.chatService.unreadDoctorMessagesCount$;
 
+  slotCountForDoctors$ = this.slotService.slotCountForDocs$;
+  slotCountForPatients$ = this.slotService.slotCountForPatients$
+
 
   constructor(private userFacade : UserFacade, private cdr: ChangeDetectorRef,
     private router: Router, public dialog: MatDialog, private slotService: SlotService,
