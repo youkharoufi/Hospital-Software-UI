@@ -35,9 +35,9 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void{
 
-    const localUser = localStorage.getItem('user');
+    const localUser = JSON.parse(localStorage.getItem('user')!);
     if (localUser !== null && localUser !== undefined) {
-      this.user = JSON.parse(localUser);
+      this.user = localUser;
       this.userLoaded = true;
       this.cdr.detectChanges();
 

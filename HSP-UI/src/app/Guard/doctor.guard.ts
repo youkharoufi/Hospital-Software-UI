@@ -13,13 +13,16 @@ export class DoctorGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    const user = localStorage.getItem('user');
     const doctor = JSON.parse(localStorage.getItem('user')!);
 
+    if(user !== null && user!==undefined){
     if (doctor.roleName !== 'Doctor') {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
       this.openSnackBar();
       return false;
     }
+  }
 
     return true;
   }

@@ -13,13 +13,17 @@ export class PatientGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    const user = localStorage.getItem('user');
     const patient = JSON.parse(localStorage.getItem('user')!);
 
-    if (patient.roleName !== 'Patient') {
-      this.router.navigate(['/']);
-      this.openSnackBar();
-      return false;
+    if(user !== null && user!==undefined){
+      if (patient.roleName !== 'Patient') {
+        this.router.navigateByUrl('/');
+        this.openSnackBar();
+        return false;
+      }
     }
+
 
     return true;
   }

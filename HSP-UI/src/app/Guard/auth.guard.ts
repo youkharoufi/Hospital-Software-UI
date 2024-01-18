@@ -13,10 +13,10 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const userIsAuthenticated = localStorage.getItem('user');
+    const userIsAuthenticated = JSON.parse(localStorage.getItem('user')!);
 
     if (userIsAuthenticated === null || userIsAuthenticated === undefined) {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
       this.openSnackBar();
       return false;
     }
