@@ -8,15 +8,19 @@ import { PersonalScheduleComponent } from './Personal/PersonalSchedule.component
 import { ChatMenuComponent } from './Chat/ChatMenu.component';
 import { RegisterDoctorComponent } from './Admin/RegisterDoctor/RegisterDoctor.component';
 import { ChatWithPatientComponent } from './ChatWithPatient/ChatWithPatient.component';
+import { AuthGuard } from './Guard/auth.guard';
+import { PatientGuard } from './Guard/patient.guard';
+import { DoctorGuard } from './Guard/doctor.guard';
+import { AdminGuard } from './Guard/admin.guard';
 
 export const appRoutes: Route[] = [
   {path:'', component:HomeComponent},
   {path:'about', component:AboutComponent},
-  {path:'doctor-list', component:ListOfDoctorsComponent},
-  {path:'doctor-schedule/:id', component:ScheduleComponent},
-  {path:'appointment/:slotId/:doctorId/:patientId', component: AppointmentComponent},
-  {path:'personal-schedule', component: PersonalScheduleComponent},
-  {path:'chat-with-doctor', component: ChatMenuComponent},
-  {path:'chat-with-patient', component: ChatWithPatientComponent},
-  {path:'create-doctor', component: RegisterDoctorComponent}
+  {path:'doctor-list', component:ListOfDoctorsComponent, canActivate: [AuthGuard]},
+  {path:'doctor-schedule/:id', component:ScheduleComponent, canActivate:[AuthGuard]},
+  {path:'appointment/:slotId/:doctorId/:patientId', component: AppointmentComponent, canActivate:[AuthGuard, PatientGuard]},
+  {path:'personal-schedule', component: PersonalScheduleComponent, canActivate:[AuthGuard]},
+  {path:'chat-with-doctor', component: ChatMenuComponent, canActivate:[AuthGuard, PatientGuard]},
+  {path:'chat-with-patient', component: ChatWithPatientComponent, canActivate:[AuthGuard, DoctorGuard]},
+  {path:'create-doctor', component: RegisterDoctorComponent, canActivate:[AuthGuard, AdminGuard]}
 ];
