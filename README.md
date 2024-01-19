@@ -10,54 +10,31 @@
 To start the development server run `nx serve hsi`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 
-## Generate code
+## Description
 
-If you happen to use Nx plugins, you can leverage code generators that might come with it.
+This is a frontend application coded in Javascript more precisely with the Angular 17 framework.
+It goes in pair with the "Hospital-Software-API" also available in my repositories.
 
-Run `nx list` to get a list of available plugins and whether they have generators. Then run `nx list <plugin-name>` to see what generators are available.
+## How to use the app
 
-Learn more about [Nx generators on the docs](https://nx.dev/plugin-features/use-code-generators).
+✨ Appointments : As coded in the API, the calendars that I created for each user are updated automatically each week.
 
-## Running tasks
+You can login as Henry, a patient with these credentials : 
+Username : Henry
+Password : Password123!
 
-To execute tasks with Nx use the following syntax:
+Then clic on the "Doctors" dropdown menu option in the Nav Bar to select which doctor (depending on the medical field) you want to book an appointment with.
+To book an appointment click on a doctor, then select a time slot in their calendar by clicking on it. After that you will be redirected to to a page on which 
+you will have to clic on a button labelled : "Make an appointment".
 
-```
-nx <target> <project> <...options>
-```
+✨ Chat : 
+In the Nav Bar, you will find a menu option named "Chat", which redirects to a chat that I have created based on the whatsapp application model. You can send
+and receive messages from and to doctors.
 
-You can also run multiple targets:
+✨ Doctors profiles : 
+As a doctor, you can login as Estelle (credentials are -> Username : Estelle AND Password : Password123!). You can chat with patients and check your calendar 
+to see if you have any appointments during the week from 9am to 5pm (UTC+5).
 
-```
-nx run-many -t <target1> <target2>
-```
+✨ Administrators profiles :
+As an administrator, you can login as Youssef (Yes, me haha) and add Doctors and Patients to the software system.
 
-..or add `-p` to filter specific projects
-
-```
-nx run-many -t <target1> <target2> -p <proj1> <proj2>
-```
-
-Targets can be defined in the `package.json` or `projects.json`. Learn more [in the docs](https://nx.dev/core-features/run-tasks).
-
-## Want better Editor Integration?
-
-Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It provides autocomplete support, a UI for exploring and running tasks & generators, and more! Available for VSCode, IntelliJ and comes with a LSP for Vim users.
-
-## Ready to deploy?
-
-Just run `nx build demoapp` to build the application. The build artifacts will be stored in the `dist/` directory, ready to be deployed.
-
-## Set up CI!
-
-Nx comes with local caching already built-in (check your `nx.json`). On CI you might want to go a step further.
-
-- [Set up remote caching](https://nx.dev/core-features/share-your-cache)
-- [Set up task distribution across multiple machines](https://nx.dev/nx-cloud/features/distribute-task-execution)
-- [Learn more how to setup CI](https://nx.dev/recipes/ci)
-
-## Connect with us!
-
-- [Join the community](https://nx.dev/community)
-- [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
-- [Follow us on Twitter](https://twitter.com/nxdevtools)
